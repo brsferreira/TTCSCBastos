@@ -1,7 +1,7 @@
 
 CREATE TABLE Proprietario
 ( 
-	id_proprietario      integer  NOT NULL ,
+	id_proprietario      int  NOT NULL ,
 	CONSTRAINT XPKProprietario PRIMARY KEY (id_proprietario ASC)
 )
 go
@@ -10,7 +10,7 @@ go
 
 CREATE TABLE Estado_Imovel
 ( 
-	id_Estado_Imovel     integer  NOT NULL ,
+	id_Estado_Imovel     int  NOT NULL ,
 	estado_imovel        nvarchar(20)  NOT NULL ,
 	CONSTRAINT XPKEstado_Imovel PRIMARY KEY (id_Estado_Imovel ASC)
 )
@@ -21,7 +21,7 @@ go
 CREATE TABLE Tipo_Imovel
 ( 
 	tipo_imovel          nvarchar(20)  NULL ,
-	id_TipoImovel        integer  NOT NULL ,
+	id_TipoImovel        int  NOT NULL ,
 	CONSTRAINT XPKTipo_Imovel PRIMARY KEY (id_TipoImovel ASC)
 )
 go
@@ -31,7 +31,7 @@ go
 CREATE TABLE TipoImovel_Qualificador
 ( 
 	nome_qualificador    nvarchar(20)  NOT NULL ,
-	id_qualificadorImovel integer  NOT NULL ,
+	id_qualificadorImovel int  NOT NULL ,
 	CONSTRAINT XPKTipoImovel_Qualificador PRIMARY KEY (id_qualificadorImovel ASC)
 )
 go
@@ -40,16 +40,16 @@ go
 
 CREATE TABLE Imovel
 ( 
-	IdImovel             integer  NOT NULL ,
-	id_proprietario      integer  NOT NULL ,
-	id_Estado_Imovel     integer  NOT NULL ,
+	IdImovel             int  NOT NULL ,
+	id_proprietario      int  NOT NULL ,
+	id_Estado_Imovel     int  NOT NULL ,
 	area_lote            decimal(5,2)  NULL ,
 	area_construcao      decimal(5,2)  NULL ,
 	area_util            decimal(5,2)  NULL ,
-	anos_construcao      integer  NULL ,
+	anos_construcao      int  NULL ,
 	ocupado              bit  NOT NULL ,
-	id_TipoImovel        integer  NOT NULL ,
-	id_qualificadorImovel integer  NOT NULL ,
+	id_TipoImovel        int  NOT NULL ,
+	id_qualificadorImovel int  NOT NULL ,
 	CONSTRAINT XPKImovel PRIMARY KEY (IdImovel ASC),
 	CONSTRAINT R_6 FOREIGN KEY (id_proprietario) REFERENCES Proprietario(id_proprietario)
 		ON DELETE NO ACTION
@@ -66,7 +66,7 @@ go
 CREATE TABLE Imovel_Proximidade_Comercio
 ( 
 	farmacia             bit  NULL ,
-	IdImovel             integer  NOT NULL ,
+	IdImovel             int  NOT NULL ,
 	CONSTRAINT XPKImovel_Proximidade_Comercio PRIMARY KEY (IdImovel ASC),
 	CONSTRAINT R_19 FOREIGN KEY (IdImovel) REFERENCES Imovel(IdImovel)
 		ON DELETE CASCADE
@@ -78,7 +78,7 @@ go
 
 CREATE TABLE Imovel_Componentes
 ( 
-	IdImovel             integer  NOT NULL ,
+	IdImovel             int  NOT NULL ,
 	churrasqueira        bit  NULL ,
 	CONSTRAINT XPKImovel_Componentes PRIMARY KEY (IdImovel ASC),
 	CONSTRAINT R_14 FOREIGN KEY (IdImovel) REFERENCES Imovel(IdImovel)
@@ -91,7 +91,7 @@ go
 
 CREATE TABLE Localizacao_Imovel
 ( 
-	IdImovel             integer  NOT NULL ,
+	IdImovel             int  NOT NULL ,
 	CONSTRAINT XPKLocalizacao_Imovel PRIMARY KEY (IdImovel ASC),
 	CONSTRAINT R_8 FOREIGN KEY (IdImovel) REFERENCES Imovel(IdImovel)
 		ON DELETE CASCADE
@@ -103,8 +103,8 @@ go
 
 CREATE TABLE Endereco
 ( 
-	id_enderecoProprietario integer  NOT NULL ,
-	id_proprietario      integer  NOT NULL ,
+	id_enderecoProprietario int NOT NULL ,
+	id_proprietario      int NOT NULL ,
 	CONSTRAINT XPKEndereco PRIMARY KEY (id_enderecoProprietario ASC),
 	CONSTRAINT R_7 FOREIGN KEY (id_proprietario) REFERENCES Proprietario(id_proprietario)
 		ON DELETE CASCADE
@@ -117,7 +117,7 @@ go
 CREATE TABLE Dependencia
 ( 
 	dependencia          nvarchar(20)  NULL ,
-	IdDepend             integer  NOT NULL ,
+	IdDepend             int  NOT NULL ,
 	CONSTRAINT XPKDependencia PRIMARY KEY (IdDepend ASC)
 )
 go
