@@ -1,0 +1,145 @@
+
+CREATE TABLE Proprietario
+( 
+	id_proprietario      integer  NOT NULL ,
+	CONSTRAINT XPKProprietario PRIMARY KEY (id_proprietario ASC)
+)
+go
+
+
+
+CREATE TABLE Estado_Imovel
+( 
+	id_Estado_Imovel     integer  NOT NULL ,
+	estado_imovel        nvarchar(20)  NOT NULL ,
+	CONSTRAINT XPKEstado_Imovel PRIMARY KEY (id_Estado_Imovel ASC)
+)
+go
+
+
+
+CREATE TABLE Tipo_Imovel
+( 
+	tipo_imovel          nvarchar(20)  NULL ,
+	id_TipoImovel        integer  NOT NULL ,
+	CONSTRAINT XPKTipo_Imovel PRIMARY KEY (id_TipoImovel ASC)
+)
+go
+
+
+
+CREATE TABLE TipoImovel_Qualificador
+( 
+	nome_qualificador    nvarchar(20)  NOT NULL ,
+	id_qualificadorImovel integer  NOT NULL ,
+	CONSTRAINT XPKTipoImovel_Qualificador PRIMARY KEY (id_qualificadorImovel ASC)
+)
+go
+
+
+
+CREATE TABLE Imovel
+( 
+	IdImovel             integer  NOT NULL ,
+	id_proprietario      integer  NOT NULL ,
+	id_Estado_Imovel     integer  NOT NULL ,
+	area_lote            decimal(5,2)  NULL ,
+	area_construcao      decimal(5,2)  NULL ,
+	area_util            decimal(5,2)  NULL ,
+	anos_construcao      integer  NULL ,
+	ocupado              bit  NOT NULL ,
+	id_TipoImovel        integer  NOT NULL ,
+	id_qualificadorImovel integer  NOT NULL ,
+	CONSTRAINT XPKImovel PRIMARY KEY (IdImovel ASC),
+	CONSTRAINT R_6 FOREIGN KEY (id_proprietario) REFERENCES Proprietario(id_proprietario)
+		ON DELETE NO ACTION
+		ON UPDATE NO ACTION,
+CONSTRAINT R_13 FOREIGN KEY (id_Estado_Imovel) REFERENCES Estado_Imovel(id_Estado_Imovel)
+		ON UPDATE CASCADE,
+CONSTRAINT R_15 FOREIGN KEY (id_TipoImovel) REFERENCES Tipo_Imovel(id_TipoImovel),
+CONSTRAINT R_16 FOREIGN KEY (id_qualificadorImovel) REFERENCES TipoImovel_Qualificador(id_qualificadorImovel)
+)
+go
+
+
+
+CREATE TABLE Imovel_Proximidade_Comercio
+( 
+	farmacia             bit  NULL ,
+	IdImovel             integer  NOT NULL ,
+	CONSTRAINT XPKImovel_Proximidade_Comercio PRIMARY KEY (IdImovel ASC),
+	CONSTRAINT R_19 FOREIGN KEY (IdImovel) REFERENCES Imovel(IdImovel)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
+)
+go
+
+
+
+CREATE TABLE Imovel_Componentes
+( 
+	IdImovel             integer  NOT NULL ,
+	churrasqueira        bit  NULL ,
+	CONSTRAINT XPKImovel_Componentes PRIMARY KEY (IdImovel ASC),
+	CONSTRAINT R_14 FOREIGN KEY (IdImovel) REFERENCES Imovel(IdImovel)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
+)
+go
+
+
+
+CREATE TABLE Localizacao_Imovel
+( 
+	IdImovel             integer  NOT NULL ,
+	CONSTRAINT XPKLocalizacao_Imovel PRIMARY KEY (IdImovel ASC),
+	CONSTRAINT R_8 FOREIGN KEY (IdImovel) REFERENCES Imovel(IdImovel)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
+)
+go
+
+
+
+CREATE TABLE Endereco
+( 
+	id_enderecoProprietario integer  NOT NULL ,
+	id_proprietario      integer  NOT NULL ,
+	CONSTRAINT XPKEndereco PRIMARY KEY (id_enderecoProprietario ASC),
+	CONSTRAINT R_7 FOREIGN KEY (id_proprietario) REFERENCES Proprietario(id_proprietario)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
+)
+go
+
+
+
+CREATE TABLE Dependencia
+( 
+	dependencia          nvarchar(20)  NULL ,
+	IdDepend             integer  NOT NULL ,
+	CONSTRAINT XPKDependencia PRIMARY KEY (IdDepend ASC)
+)
+go
+
+
+
+CREATE TABLE Imovel_Dependencia
+( 
+	IdImovel             integer  NOT NULL ,
+	IdDepend             integer  NOT NULL ,
+	Area                 decimal(5,2)  NULL ,
+	piso                 nvarchar(20)  NULL ,
+	Comprimento          decimal(5,2)  NULL ,
+	largura              decimal(5,2)  NULL ,
+	altura               decimal(5,2)  NULL ,
+	CONSTRAINT XPKImovel_Dependencia PRIMARY KEY (IdImovel ASC,IdDepend ASC),
+	CONSTRAINT R_4 FOREIGN KEY (IdImovel) REFERENCES Imovel(IdImovel)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
+CONSTRAINT R_5 FOREIGN KEY (IdDepend) REFERENCES Dependencia(IdDepend)
+		ON UPDATE CASCADE
+)
+go
+
+
