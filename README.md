@@ -1,2 +1,0 @@
-# TTCSCBastos
-Projeto TCC SCBastos
